@@ -22,7 +22,7 @@ net.createServer(function(sock) {
     // Add a 'data' event handler to this instance of socket
     sock.on('data', function(data) {
         console.log('Message from: ' + sock.remoteAddress + ':' + sock.remotePort + ' : '+ data);
-        // Write the data back to the socket, the client will receive it as data from the server
+        // our If cases of proccesing the commands that comes from the client
         if (data == 'Showtime') {
             fs.readFile('./img/terminator.jpg','hex', function (err,data) {
               // Fail if the file can't be read.
@@ -42,13 +42,13 @@ net.createServer(function(sock) {
             var number100 = Math.floor(Math.random() * (100 - 1 +1) + 1)
             sock.write('Random number from 1 included to 100 included is: '+number100);
         } else if(data =='Weather Chisinau'){
-                // Retrieve weather information, ignoring the cache
+                // Retrieve weather information for Chisinau
                 forecast.get([47.0104529, 28.86381030000007], true, function(err, weather) {
                   if(err) return console.dir(err);
                   sock.write('\n Timezone: '+weather.timezone+'\n Summary: '+weather.hourly.summary+'\n Currently: '+JSON.stringify(weather.currently));
                 });
         } else if(data =='Weather Prague'){
-                // Retrieve weather information, ignoring the cache
+                // Retrieve weather information for Prague
                 forecast.get([50.0755381, 14.43780049999998], true, function(err, weather) {
                   if(err) return console.dir(err);
                   sock.write('\n Timezone: '+weather.timezone+'\n Summary: '+weather.hourly.summary+'\n Currently: '+JSON.stringify(weather.currently));
@@ -73,32 +73,24 @@ net.createServer(function(sock) {
 
 console.log('Server listening on ' + HOST +':'+ PORT);
 
-
+// Function that gets the current time and date and returns int in the formated format
 function getDateTime() {
-
     var date = new Date();
-
     var hour = date.getHours();
     hour = (hour < 10 ? "0" : "") + hour;
-
     var min  = date.getMinutes();
     min = (min < 10 ? "0" : "") + min;
-
     var sec  = date.getSeconds();
     sec = (sec < 10 ? "0" : "") + sec;
-
     var year = date.getFullYear();
-
     var month = date.getMonth() + 1;
     month = (month < 10 ? "0" : "") + month;
-
     var day  = date.getDate();
     day = (day < 10 ? "0" : "") + day;
-
     return year + ":" + month + ":" + day + ":" + hour + ":" + min + ":" + sec;
-
 }
 
+// function that checks the end of the string if it match our suffix
 function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }

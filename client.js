@@ -9,7 +9,7 @@ var client = new net.Socket();
 client.connect(PORT, HOST, function() {
 client.setEncoding('binary')
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
-    // Write a message to the socket as soon as the client is connected, the server will receive it as message from the client
+    // Reading the client's input from the console and sending them to the server
     process.stdout.write('Input your command:\n')
     process.stdin.resume();
     process.stdin.setEncoding('utf8');
@@ -24,7 +24,7 @@ client.setEncoding('binary')
 });
 
 // Add a 'data' event handler for the client socket
-// data is what the server sent to this socket
+// data is what the server sent to this socket (client)
 client.on('data', function(data) {
     if (endsWith(data.toString(), 'ffd9')) {
     fs.writeFile("img.jpg", data, 'hex', function(err) {
@@ -43,7 +43,7 @@ client.on('close', function() {
     console.log('Connection closed');
 });
 
-
+// function that checks the end of the string if it match our suffix
 function endsWith(str, suffix) {
     return str.indexOf(suffix, str.length - suffix.length) !== -1;
 }
