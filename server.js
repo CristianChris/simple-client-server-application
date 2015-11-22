@@ -29,7 +29,7 @@ net.createServer(function(sock) {
               if (err) {
                 return console.log(err);
               }
-              sock.write(data)
+              sock.write(data);
         });
         } else if(data == 'Hastalavista'){
             sock.destroy();
@@ -56,7 +56,7 @@ net.createServer(function(sock) {
         } else if(data =='Quote'){
             items = ['Everything that is done in the world is done by hope.','Morning without you is a dwindled dawn.','There is no prejudice that the work of art does not finally overcome.','Show me your garden and I shall tell you what you are.','The only thing wrong with immortality is that it tends to go on forever.']
             var quote = items[Math.floor(Math.random()*items.length)];
-            sock.write(quote)
+            sock.write(quote);
         } else {
             if (endsWith(data, '?')) {
                 sock.write('42');

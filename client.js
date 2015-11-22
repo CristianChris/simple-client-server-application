@@ -7,7 +7,7 @@ var PORT = 6969;
 
 var client = new net.Socket();
 client.connect(PORT, HOST, function() {
-client.setEncoding('binary')
+client.setEncoding('binary');
     console.log('CONNECTED TO: ' + HOST + ':' + PORT);
     // Reading the client's input from the console and sending them to the server
     process.stdout.write('Input your command:\n')
